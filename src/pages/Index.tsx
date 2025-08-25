@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Slider } from '@/components/ui/slider';
 import Icon from '@/components/ui/icon';
 
 const Index = () => {
@@ -20,39 +19,6 @@ const Index = () => {
     email: ''
   });
   const [isQuizOpen, setIsQuizOpen] = useState(false);
-  const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
-  const [calculatorData, setCalculatorData] = useState({
-    investment: 500000,
-    years: 5,
-    yield: 13.5
-  });
-  
-  // Animation refs
-  const uspRef = useRef<HTMLElement>(null);
-  const casesRef = useRef<HTMLElement>(null);
-  const aboutRef = useRef<HTMLElement>(null);
-  const ctaRef = useRef<HTMLElement>(null);
-  
-  // Intersection Observer for animations
-  useEffect(() => {
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('animate-fade-in-up');
-        }
-      });
-    }, observerOptions);
-    
-    const elements = [uspRef.current, casesRef.current, aboutRef.current, ctaRef.current].filter(Boolean);
-    elements.forEach((el) => el && observer.observe(el));
-    
-    return () => observer.disconnect();
-  }, []);
 
   const heroImages = [
     {
@@ -114,74 +80,23 @@ const Index = () => {
       location: 'Дубай, ОАЭ',
       price: '$580,000',
       yield: '13.5%',
-      images: [
-        '/img/ab720833-091d-4fdf-9329-1222ab059818.jpg',
-        'https://images.unsplash.com/photo-1571935021565-29e7ed7b6e3e?w=400&h=300&fit=crop',
-        'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop',
-        'https://images.unsplash.com/photo-1560449752-d9c7d5cd9052?w=400&h=300&fit=crop'
-      ],
-      currentImage: 0
+      image: 'https://images.unsplash.com/photo-1571935021565-29e7ed7b6e3e?w=400&h=300&fit=crop'
     },
     {
       title: 'Вилла в Muscat Hills',
       location: 'Маскат, Оман',
       price: '$420,000',
       yield: '15.2%',
-      images: [
-        '/img/e7a9a859-6753-4c2e-a715-7f87bb3cffa6.jpg',
-        'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=400&h=300&fit=crop',
-        'https://images.unsplash.com/photo-1613977257363-707ba9348227?w=400&h=300&fit=crop',
-        'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=400&h=300&fit=crop'
-      ],
-      currentImage: 0
+      image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=400&h=300&fit=crop'
     },
     {
       title: 'Таунхаус в Downtown Dubai',
       location: 'Дубай, ОАЭ',
       price: '$750,000',
       yield: '12.8%',
-      images: [
-        '/img/d4849a71-23c5-4011-8f40-cfdc7450ddbc.jpg',
-        'https://images.unsplash.com/photo-1600047509358-9dc75507daeb?w=400&h=300&fit=crop',
-        'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=400&h=300&fit=crop',
-        'https://images.unsplash.com/photo-1600047509838-6cbe9f04bf05?w=400&h=300&fit=crop'
-      ],
-      currentImage: 0
+      image: 'https://images.unsplash.com/photo-1600047509358-9dc75507daeb?w=400&h=300&fit=crop'
     }
   ];
-  
-  const [caseImages, setCaseImages] = useState(investmentCases);
-  
-  const nextImage = (caseIndex: number) => {
-    setCaseImages(prev => prev.map((item, index) => 
-      index === caseIndex 
-        ? { ...item, currentImage: (item.currentImage + 1) % item.images.length }
-        : item
-    ));
-  };
-  
-  const prevImage = (caseIndex: number) => {
-    setCaseImages(prev => prev.map((item, index) => 
-      index === caseIndex 
-        ? { ...item, currentImage: item.currentImage === 0 ? item.images.length - 1 : item.currentImage - 1 }
-        : item
-    ));
-  };
-  
-  const calculateReturns = () => {
-    const totalReturn = calculatorData.investment * (calculatorData.yield / 100) * calculatorData.years;
-    const yearlyIncome = calculatorData.investment * (calculatorData.yield / 100);
-    const finalValue = calculatorData.investment + totalReturn;
-    
-    return {
-      totalReturn: Math.round(totalReturn),
-      yearlyIncome: Math.round(yearlyIncome),
-      finalValue: Math.round(finalValue),
-      roi: Math.round(((finalValue - calculatorData.investment) / calculatorData.investment) * 100)
-    };
-  };
-
-  const returns = calculateReturns();
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
@@ -205,20 +120,20 @@ const Index = () => {
         
         <div className="relative z-10 flex items-center justify-center h-full text-center text-white px-4">
           <div className="max-w-6xl mx-auto">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-gold-light to-gold bg-clip-text text-transparent animate-fade-in-up">
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-gold-light to-gold bg-clip-text text-transparent">
               Global Estates
             </h1>
-            <h2 className="text-2xl md:text-4xl font-semibold mb-4 animate-fade-in-up" style={{animationDelay: '0.2s'}}>
+            <h2 className="text-2xl md:text-4xl font-semibold mb-4">
               Премиум-апартаменты в ОАЭ и Омане
             </h2>
-            <p className="text-xl md:text-2xl mb-8 text-gold-light font-medium animate-fade-in-up" style={{animationDelay: '0.4s'}}>
+            <p className="text-xl md:text-2xl mb-8 text-gold-light font-medium">
               Ваш пассивный доход от 12% до 50% годовых
             </p>
-            <p className="text-lg md:text-xl mb-12 max-w-4xl mx-auto opacity-90 animate-fade-in-up" style={{animationDelay: '0.6s'}}>
+            <p className="text-lg md:text-xl mb-12 max-w-4xl mx-auto opacity-90">
               Персональный подбор ликвидных объектов инвестиции с полным сопровождением и юридической гарантией
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center animate-fade-in-up" style={{animationDelay: '0.8s'}}>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
               <Button 
                 size="lg" 
                 className="bg-gradient-to-r from-gold to-gold-dark hover:from-gold-dark hover:to-gold text-black font-semibold px-8 py-4 text-lg"
@@ -226,86 +141,6 @@ const Index = () => {
                 <Icon name="Download" size={20} className="mr-2" />
                 Получить каталог объектов
               </Button>
-              
-              <Dialog open={isCalculatorOpen} onOpenChange={setIsCalculatorOpen}>
-                <DialogTrigger asChild>
-                  <Button 
-                    variant="outline" 
-                    size="lg"
-                    className="border-2 border-gold text-gold hover:bg-gold hover:text-black font-semibold px-8 py-4 text-lg"
-                  >
-                    <Icon name="Calculator" size={20} className="mr-2" />
-                    Калькулятор доходности
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-lg bg-black border-gold">
-                  <div className="p-6">
-                    <h3 className="text-2xl font-semibold mb-6 text-gold">
-                      Калькулятор доходности инвестиций
-                    </h3>
-                    
-                    <div className="space-y-6">
-                      <div>
-                        <Label className="text-white mb-2 block">Сумма инвестиции: ${calculatorData.investment.toLocaleString()}</Label>
-                        <Slider
-                          value={[calculatorData.investment]}
-                          onValueChange={(value) => setCalculatorData({...calculatorData, investment: value[0]})}
-                          max={2000000}
-                          min={100000}
-                          step={50000}
-                          className="w-full"
-                        />
-                      </div>
-                      
-                      <div>
-                        <Label className="text-white mb-2 block">Срок инвестирования: {calculatorData.years} лет</Label>
-                        <Slider
-                          value={[calculatorData.years]}
-                          onValueChange={(value) => setCalculatorData({...calculatorData, years: value[0]})}
-                          max={15}
-                          min={1}
-                          step={1}
-                          className="w-full"
-                        />
-                      </div>
-                      
-                      <div>
-                        <Label className="text-white mb-2 block">Годовая доходность: {calculatorData.yield}%</Label>
-                        <Slider
-                          value={[calculatorData.yield]}
-                          onValueChange={(value) => setCalculatorData({...calculatorData, yield: value[0]})}
-                          max={25}
-                          min={8}
-                          step={0.5}
-                          className="w-full"
-                        />
-                      </div>
-                    </div>
-                    
-                    <div className="mt-8 p-6 bg-gradient-to-r from-gold-dark to-gold rounded-lg">
-                      <h4 className="text-lg font-semibold mb-4 text-black">Результаты расчета:</h4>
-                      <div className="grid grid-cols-2 gap-4 text-black">
-                        <div>
-                          <p className="text-sm opacity-80">Годовой доход:</p>
-                          <p className="text-xl font-bold">${returns.yearlyIncome.toLocaleString()}</p>
-                        </div>
-                        <div>
-                          <p className="text-sm opacity-80">Общий доход:</p>
-                          <p className="text-xl font-bold">${returns.totalReturn.toLocaleString()}</p>
-                        </div>
-                        <div>
-                          <p className="text-sm opacity-80">Итоговая стоимость:</p>
-                          <p className="text-xl font-bold">${returns.finalValue.toLocaleString()}</p>
-                        </div>
-                        <div>
-                          <p className="text-sm opacity-80">ROI:</p>
-                          <p className="text-xl font-bold">{returns.roi}%</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </DialogContent>
-              </Dialog>
               
               <Dialog open={isQuizOpen} onOpenChange={setIsQuizOpen}>
                 <DialogTrigger asChild>
@@ -397,7 +232,7 @@ const Index = () => {
       </section>
 
       {/* USP Section */}
-      <section ref={uspRef} className="py-20 px-4 bg-gradient-to-b from-black to-gray-900 opacity-0">
+      <section className="py-20 px-4 bg-gradient-to-b from-black to-gray-900">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-gold-light to-gold bg-clip-text text-transparent">
             Ключевые преимущества
@@ -447,7 +282,7 @@ const Index = () => {
       </section>
 
       {/* Investment Cases */}
-      <section ref={casesRef} className="py-20 px-4 bg-gradient-to-b from-gray-900 to-black opacity-0">
+      <section className="py-20 px-4 bg-gradient-to-b from-gray-900 to-black">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 bg-gradient-to-r from-gold-light to-gold bg-clip-text text-transparent">
             Инвестиционные кейсы
@@ -457,43 +292,13 @@ const Index = () => {
           </p>
           
           <div className="grid md:grid-cols-3 gap-8">
-            {caseImages.map((property, index) => (
+            {investmentCases.map((property, index) => (
               <Card key={index} className="bg-gradient-to-b from-gray-800 to-gray-900 border-gold border-2 overflow-hidden hover:scale-105 transition-transform duration-300">
-                <div className="relative">
-                  <img 
-                    src={property.images[property.currentImage]} 
-                    alt={property.title}
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="absolute inset-0 flex justify-between items-center px-4">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="bg-black bg-opacity-50 hover:bg-opacity-75 text-white p-2"
-                      onClick={() => prevImage(index)}
-                    >
-                      <Icon name="ChevronLeft" size={20} />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="bg-black bg-opacity-50 hover:bg-opacity-75 text-white p-2"
-                      onClick={() => nextImage(index)}
-                    >
-                      <Icon name="ChevronRight" size={20} />
-                    </Button>
-                  </div>
-                  <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-1">
-                    {property.images.map((_, imgIndex) => (
-                      <div
-                        key={imgIndex}
-                        className={`w-2 h-2 rounded-full ${
-                          imgIndex === property.currentImage ? 'bg-gold' : 'bg-white bg-opacity-50'
-                        }`}
-                      />
-                    ))}
-                  </div>
-                </div>
+                <img 
+                  src={property.image} 
+                  alt={property.title}
+                  className="w-full h-48 object-cover"
+                />
                 <CardContent className="p-6">
                   <h3 className="text-xl font-semibold mb-2 text-gold">
                     {property.title}
@@ -528,7 +333,7 @@ const Index = () => {
       </section>
 
       {/* About Section */}
-      <section ref={aboutRef} className="py-20 px-4 bg-gradient-to-b from-black to-gray-900 opacity-0">
+      <section className="py-20 px-4 bg-gradient-to-b from-black to-gray-900">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl font-bold mb-8 bg-gradient-to-r from-gold-light to-gold bg-clip-text text-transparent">
             О Global Estates
@@ -548,7 +353,7 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section ref={ctaRef} className="py-20 px-4 bg-gradient-to-r from-gold-dark via-gold to-gold-dark opacity-0">
+      <section className="py-20 px-4 bg-gradient-to-r from-gold-dark via-gold to-gold-dark">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-black">
             Готовы сделать первый шаг к пассивному доходу?
